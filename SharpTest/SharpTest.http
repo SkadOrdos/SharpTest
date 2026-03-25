@@ -1,6 +1,6 @@
 @WebAppi_HostAddress = http://localhost:5258
 
-GET {{WebAppi_HostAddress}}/weatherforecast/
+GET {{WebAppi_HostAddress}}/Service/GetDigits/
 Accept: application/json
 
 ###

@@ -1,14 +1,13 @@
-using Microsoft.AspNetCore.Authorization.Policy;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Mvc.Filters;
-using System.Security.Claims;
 using Microsoft.Net.Http.Headers;
-using System.Text;
 using System.Net;
+using System.Security.Claims;
+using System.Text;
 
 namespace WebSharp.Auth
 {
+    /// <summary>
+    /// Basic authorization middleware via login and password
+    /// </summary>
     public class BasicAuthMiddleware
     {
         private readonly RequestDelegate _next;
@@ -56,7 +55,7 @@ namespace WebSharp.Auth
             // Если авторизация не удалась, возвращаем 401
             context.Response.StatusCode = (int)HttpStatusCode.Unauthorized;
             context.Response.Headers["WWW-Authenticate"] = "Basic";
-            await context.Response.WriteAsync("Unauthorized");
+            await context.Response.WriteAsync("Missing Authorization Header");
         }
     }
 }

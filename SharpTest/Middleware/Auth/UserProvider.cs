@@ -4,7 +4,7 @@ namespace WebSharp.Auth
 {
     public interface IUserProvider
     {
-        bool VerifyUser(string login, string password);
+        bool VerifyUser(string login, string pwdHash);
     }
 
     public class UserInfo
@@ -12,7 +12,7 @@ namespace WebSharp.Auth
         public string Login { get; set; }
 
         /// <summary>
-        /// MD5(String.Concat(login, ":", password))
+        /// SHA256(String.Concat(login, ":", password))
         /// </summary>
         public string Password { get; set; }
 
@@ -22,14 +22,8 @@ namespace WebSharp.Auth
 
     public class UserProvider : IUserProvider
     {
-        public UserProvider()
+        public bool VerifyUser(string login, string pwdHash)
         {
-
-        }
-
-        public bool VerifyUser(string login, string password)
-        {
-            string hashedPassword = Crypto.GetSHA256(String.Concat(login, ":", password));
             UserInfo[] users;
             try
             {
@@ -40,7 +34,8 @@ namespace WebSharp.Auth
                 return false;
             }
 
-            return users.Any(u => String.Equals(u.Login, login, StringComparison.OrdinalIgnoreCase) && String.Equals(u.Password, hashedPassword, StringComparison.OrdinalIgnoreCase));
+            return users.Any(u => String.Equals(u.Login, login, StringComparison.OrdinalIgnoreCase) &&
+                String.Equals(u.Password, pwdHash, StringComparison.OrdinalIgnoreCase));
         }
     }
 }
