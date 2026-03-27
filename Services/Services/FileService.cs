@@ -11,7 +11,7 @@ namespace WebSharp.Services
 
 
     /// <summary>
-    /// Контейнер для работы с массивом
+    /// Numbers container
     /// </summary>
     public class ArrayData
     {
@@ -56,7 +56,11 @@ namespace WebSharp.Services
             return loadedData;
         }
 
+        /// <summary>
+        /// Local numbers cache
+        /// </summary>
         public ArrayData ArrayCache;
+
         private async void UpdateCache()
         {
             var content = File.OpenRead("digits.json");

@@ -28,12 +28,10 @@ namespace WebSharp.Services
         public virtual object ActionError { get; set; }
     }
 
-    public interface IDispatcherClient
-    {
-        public DispatcherStatus DispatchMessage(IDispatcherMessage message);
-    }
 
-
+    /// <summary>
+    /// Internal message dispatcher (internal broker message)
+    /// </summary>
     public class MessageDispatcher
     {
         private static MessageDispatcher _instance;

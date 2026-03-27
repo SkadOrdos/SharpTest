@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using WebSharp.Services;
@@ -8,6 +9,7 @@ namespace WebSharp.Controllers
     [EnableCors()]
     [Route("Service")]
     [Produces("application/json")]
+    [Authorize]
     public class ServiceController : ControllerBase
     {
         private readonly ILogger<ServiceController> _logger;
@@ -26,8 +28,8 @@ namespace WebSharp.Controllers
             return Ok(fileService.Load());
         }
 
-        [HttpGet("GetQuantille")]
-        public ActionResult GetQuantille(double tau)
+        [HttpGet("GetDataQuantille")]
+        public ActionResult GetDataQuantille(double tau)
         {
             var service = (FileService)fileService;
             return Ok($"Quantille: {service.GetQuantille(tau).Result}; Data: [{String.Join(",", service.ArrayCache.Data)}]");

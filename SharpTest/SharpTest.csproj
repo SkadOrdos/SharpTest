@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Middleware\Auth\AuthorizationMiddlewareHandler.cs" />
+    <Compile Remove="Auth\AuthorizationMiddlewareHandler.cs" />
   </ItemGroup>
 
   <ItemGroup>

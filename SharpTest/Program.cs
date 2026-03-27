@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication;
 using WebSharp.Auth;
 using WebSharp.Services;
 
@@ -30,11 +31,11 @@ namespace WebSharp
                     });
             });
 
-            //builder.Services.AddAuthorization(options =>
-            //{
-            //    // By default, all incoming requests will be authorized according to the default policy.
-            //    options.FallbackPolicy = options.DefaultPolicy;
-            //});
+            builder.Services
+                .AddAuthentication("Basic")
+                .AddScheme<AuthenticationSchemeOptions, BasicAuthenticationHandler>("Basic", null);
+
+            builder.Services.AddAuthorization();
 
             fileService = new FileWorker();
 
@@ -58,9 +59,10 @@ namespace WebSharp
             app.MapControllers();
             app.UseHttpsRedirection();
 
-            app.UseMiddleware<BasicAuthMiddleware>();
+            //app.UseMiddleware<BasicAuthMiddleware>();
             app.UseMiddleware<LoggerMiddleware>();
-            //app.UseAuthorization();
+            app.UseAuthentication();
+            app.UseAuthorization();
             app.UseCors();
 
             app.Run();
